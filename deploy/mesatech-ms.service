@@ -1,0 +1,17 @@
+# Servicio systemd para un microservicio. Se instala en EC2 A (ms-catalogo) y en EC2 B (ms-solicitudes).
+# Reemplazar NOMBRE_MS por ms-catalogo o ms-solicitudes y guardar como /etc/systemd/system/NOMBRE_MS.service
+[Unit]
+Description=MesaTech NOMBRE_MS
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/opt/mesatech
+EnvironmentFile=/opt/mesatech/.env
+ExecStart=/usr/bin/java -jar /opt/mesatech/NOMBRE_MS.jar
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
